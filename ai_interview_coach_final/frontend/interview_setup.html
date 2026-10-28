@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configure Interview - AI Interview Coach</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="dashboard.html" class="brand">AI Interview Coach</a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="interview_setup.html" class="active">New Interview</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="skill_gap.html">Skill Gap</a></li>
+      <li><button id="btn-logout" class="btn-nav-logout">Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="container" style="max-width: 650px;">
+    <div class="page-header">
+      <div>
+        <h1>Configure AI Mock Interview</h1>
+        <p>Set your target job role, interview type, difficulty, and number of questions.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="alert-box"></div>
+
+      <form id="setup-form">
+        <div class="form-group">
+          <label for="target_role">Target Job Role</label>
+          <select id="target_role" class="form-control">
+            <option value="Java Developer">Java Developer</option>
+            <option value="Python Developer">Python Developer</option>
+            <option value="Software Developer">Software Developer</option>
+            <option value="Full Stack Developer">Full Stack Developer</option>
+            <option value="Data Analyst">Data Analyst</option>
+            <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+          </select>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="interview_type">Interview Type</label>
+            <select id="interview_type" class="form-control">
+              <option value="Technical">Technical Interview</option>
+              <option value="HR">HR Interview</option>
+              <option value="Behavioral">Behavioral Interview</option>
+              <option value="Mixed">Mixed Interview</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="difficulty">Difficulty Level</label>
+            <select id="difficulty" class="form-control">
+              <option value="Easy">Easy</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="total_questions">Number of Questions (1 - 20)</label>
+          <input type="number" id="total_questions" class="form-control" value="5" min="1" max="20" required>
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+          <button type="submit" class="btn btn-primary btn-block" style="font-size: 1.05rem; padding: 0.85rem;">
+            🚀 Start AI Mock Interview
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI-Powered Intelligent Interview Coaching & Assessment System &copy; 2026</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const btnLogout = document.getElementById('btn-logout');
+      if (btnLogout) { btnLogout.addEventListener('click', () => { API.clearAuth(); window.location.href = 'login.html'; }); }
+
+      try {
+        const p = await API.getProfile();
+        if (p.target_role) document.getElementById('target_role').value = p.target_role;
+        if (p.preferred_interview_type) document.getElementById('interview_type').value = p.preferred_interview_type;
+        if (p.preferred_difficulty) document.getElementById('difficulty').value = p.preferred_difficulty;
+      } catch (err) {}
+
+      document.getElementById('setup-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          target_role: document.getElementById('target_role').value,
+          interview_type: document.getElementById('interview_type').value,
+          difficulty: document.getElementById('difficulty').value,
+          total_questions: parseInt(document.getElementById('total_questions').value, 10)
+        };
+
+        try {
+          const interview = await API.createInterview(payload);
+          window.location.href = `live_interview.html?id=${interview.id}`;
+        } catch (err) {
+          alert('Failed to initialize interview: ' + err.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Interview Coach & Assessment Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
+      AI Interview Coach
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html" class="btn btn-primary" style="padding: 0.4rem 1rem; color: white;">Register</a></li>
+    </ul>
+  </nav>
+
+  <div class="container" style="text-align: center; padding: 4rem 1rem;">
+    <span class="badge badge-primary" style="font-size: 0.9rem; margin-bottom: 1rem;">Generative AI Powered</span>
+    <h1 style="font-size: 2.75rem; margin-bottom: 1rem; color: #0f172a;">AI-Powered Intelligent Interview Coaching & Candidate Assessment</h1>
+    <p style="font-size: 1.2rem; color: #64748b; max-width: 800px; margin: 0 auto 2.5rem;">
+      Master technical, HR, and behavioral interviews with real-time cloud LLM question generation, multi-dimensional scoring, contextual follow-ups, and personalized skill gap coaching.
+    </p>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem;">
+      <a href="register.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.85rem 2rem;">Get Started Free</a>
+      <button id="btn-seed-demo" class="btn btn-outline" style="font-size: 1.1rem; padding: 0.85rem 2rem;">🚀 Quick Demo Seed</button>
+    </div>
+
+    <div class="grid-3" style="margin-top: 2rem; text-align: left;">
+      <div class="card">
+        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">🤖 Dynamic Question Gen</h3>
+        <p style="color: var(--text-muted);">AI generates dynamic interview questions tailored specifically to your target role, experience level, declared skills, and previous answers.</p>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">🎯 Contextual Follow-ups</h3>
+        <p style="color: var(--text-muted);">Intelligently probes deeper when your answers are incomplete or vague, replicating real senior tech recruiter behavior.</p>
+      </div>
+      <div class="card">
+        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">📊 Multi-Dimensional Scoring</h3>
+        <p style="color: var(--text-muted);">Evaluates responses across 5 dimensions: Correctness, Relevance, Completeness, Technical Understanding, and Communication.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI-Powered Intelligent Interview Coaching & Assessment System &copy; 2026</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.getElementById('btn-seed-demo').addEventListener('click', async () => {
+      try {
+        const res = await API.seedDemoData();
+        alert('Demo Candidate & Sample Assessment Seeded Successfully!\n\nEmail: demo@example.com\nPassword: password123');
+        window.location.href = 'login.html';
+      } catch (err) {
+        alert('Seeding failed: ' + err.message);
+      }
+    });
+
+    if (API.getAuthToken()) {
+      document.getElementById('nav-links').innerHTML = `
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="interview_setup.html" class="btn btn-primary" style="color:white; padding: 0.4rem 1rem;">Start Interview</a></li>
+      `;
+    }
+  </script>
+</body>
+</html>

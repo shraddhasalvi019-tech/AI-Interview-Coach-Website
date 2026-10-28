@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detailed Candidate Assessment Report</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media print {
+      .navbar, footer, .btn-print { display: none !important; }
+      body { background: white; }
+      .container { max-width: 100%; margin: 0; padding: 0; }
+    }
+    .report-section { margin-bottom: 2rem; }
+    .report-section h3 {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .q-eval-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      padding: 1.25rem;
+      border-radius: 6px;
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="dashboard.html" class="brand">AI Interview Coach</a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><button onclick="window.print()" class="btn btn-outline btn-print">🖨️ Print / Save PDF</button></li>
+      <li><button id="btn-logout" class="btn-nav-logout">Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="container" style="max-width: 950px;">
+    <!-- Report Header Banner -->
+    <div class="card" style="border-top: 5px solid var(--primary);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span class="badge badge-primary">Official Assessment Report</span>
+          <h1 style="font-size: 2rem; margin-top: 0.4rem;" id="report-candidate-name">Candidate Assessment Report</h1>
+          <p style="color: var(--text-muted);" id="report-target-role">Target Job Role: Software Developer</p>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 0.85rem; color: var(--text-muted);" id="report-date">Date: 2026-10-03</div>
+          <div style="font-size: 2.25rem; font-weight: 800; color: var(--primary);" id="report-overall-score">82%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 1 & 2: Candidate & Session Details -->
+    <div class="grid-2 report-section">
+      <div class="card">
+        <h3>1. Candidate Information</h3>
+        <p><strong>Full Name:</strong> <span id="info-name">Candidate</span></p>
+        <p><strong>Email Address:</strong> <span id="info-email">email@example.com</span></p>
+        <p><strong>Education:</strong> <span id="info-edu">B.Tech CS</span></p>
+        <p><strong>Experience Level:</strong> <span id="info-exp">Fresher</span></p>
+      </div>
+
+      <div class="card">
+        <h3>2. Interview Session Info</h3>
+        <p><strong>Target Role:</strong> <span id="info-role">Java Developer</span></p>
+        <p><strong>Interview Type:</strong> <span id="info-type">Technical</span></p>
+        <p><strong>Difficulty Level:</strong> <span id="info-diff">Medium</span></p>
+        <p><strong>Total Questions:</strong> <span id="info-total-q">5</span></p>
+      </div>
+    </div>
+
+    <!-- Section 3 & 4: Dimension Score Breakdown -->
+    <div class="card report-section">
+      <h3>3. Multi-Dimensional Performance Breakdown</h3>
+      <div class="grid-3" style="margin-top: 1rem;">
+        <div class="stat-card">
+          <div><div class="label">Technical Knowledge</div><div class="value" id="score-tech-dim">0%</div></div>
+        </div>
+        <div class="stat-card">
+          <div><div class="label">Communication Clarity</div><div class="value" id="score-comm-dim">0%</div></div>
+        </div>
+        <div class="stat-card">
+          <div><div class="label">Answer Relevance</div><div class="value" id="score-relev-dim">0%</div></div>
+        </div>
+        <div class="stat-card">
+          <div><div class="label">Correctness</div><div class="value" id="score-corr-dim">0%</div></div>
+        </div>
+        <div class="stat-card">
+          <div><div class="label">Completeness</div><div class="value" id="score-comp-dim">0%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Question-by-Question Evaluations -->
+    <div class="card report-section">
+      <h3>4. Question-by-Question Detailed Evaluations</h3>
+      <div id="questions-evaluation-container">
+        <p style="color: var(--text-muted);">Loading question evaluations...</p>
+      </div>
+    </div>
+
+    <!-- Section 6: AI Feedback & Skill Gaps -->
+    <div class="grid-2 report-section">
+      <div class="card">
+        <h3 style="color: var(--success);">5. Candidate Strengths</h3>
+        <ul id="list-report-strengths" style="padding-left: 1.2rem; line-height: 1.8;"></ul>
+      </div>
+
+      <div class="card">
+        <h3 style="color: var(--danger);">6. Technical Gaps & Weaknesses</h3>
+        <ul id="list-report-gaps" style="padding-left: 1.2rem; line-height: 1.8;"></ul>
+      </div>
+    </div>
+
+    <div class="card report-section">
+      <h3>7. Recommended Topics & Coaching Tips</h3>
+      <div class="grid-2">
+        <div>
+          <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Recommended Topics to Study</h4>
+          <ul id="list-report-topics" style="padding-left: 1.2rem; line-height: 1.8;"></ul>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 0.5rem; color: var(--primary);">Interview Coaching Tips</h4>
+          <ul id="list-report-tips" style="padding-left: 1.2rem; line-height: 1.8;"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 8: Exemplary Sample Answer Improvement -->
+    <div class="card report-section">
+      <h3>8. Sample Answer Improvement Example</h3>
+      <div id="sample-improvement-container">
+        <p style="color: var(--text-muted);">Loading improvement examples...</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI-Powered Intelligent Interview Coaching & Assessment System &copy; 2026</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/report.js"></script>
+</body>
+</html>

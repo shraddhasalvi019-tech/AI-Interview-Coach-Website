@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Skill Gap Analysis - AI Interview Coach</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="dashboard.html" class="brand">AI Interview Coach</a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="interview_setup.html">New Interview</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="skill_gap.html" class="active">Skill Gap</a></li>
+      <li><button id="btn-logout" class="btn-nav-logout">Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h1>AI Skill-Gap Analysis & Career Roadmap</h1>
+        <p>Comparison of declared candidate skills vs expected industry benchmark skills for your target role.</p>
+      </div>
+      <div>
+        <a href="profile.html" class="btn btn-outline">Edit Candidate Profile</a>
+      </div>
+    </div>
+
+    <!-- Overview Banner -->
+    <div class="card" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: white;">
+      <div style="font-size: 0.85rem; text-transform: uppercase; color: #94a3b8; font-weight: 700; letter-spacing: 1px;">Target Role Benchmark</div>
+      <h2 id="gap-target-role" style="font-size: 2rem; color: #60a5fa; margin: 0.4rem 0;">Java Developer</h2>
+      <p style="color: #cbd5e1;">Evaluated against industry hiring standards for technical recruiters.</p>
+    </div>
+
+    <div class="grid-3" style="margin-bottom: 2rem;">
+      <!-- Strong Skills Card -->
+      <div class="card" style="border-top: 4px solid var(--success);">
+        <h3 style="color: var(--success); margin-bottom: 1rem;">✅ Strong Matching Skills</h3>
+        <div id="container-strong-skills" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="badge badge-success">Java</span>
+          <span class="badge badge-success">SQL</span>
+        </div>
+      </div>
+
+      <!-- Skills to Improve Card -->
+      <div class="card" style="border-top: 4px solid var(--warning);">
+        <h3 style="color: var(--warning); margin-bottom: 1rem;">⚠️ Skills to Improve</h3>
+        <div id="container-improve-skills" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="badge badge-warning">Multithreading</span>
+          <span class="badge badge-warning">REST APIs</span>
+        </div>
+      </div>
+
+      <!-- Expected Industry Skills -->
+      <div class="card" style="border-top: 4px solid var(--primary);">
+        <h3 style="color: var(--primary); margin-bottom: 1rem;">🎯 Industry Expected Skills</h3>
+        <div id="container-expected-skills" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span class="badge badge-primary">Java</span>
+          <span class="badge badge-primary">Spring Boot</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recommended Learning Roadmap -->
+    <div class="card">
+      <h3 style="color: var(--primary); margin-bottom: 1rem;">📚 Recommended Learning & Upskilling Roadmap</h3>
+      <ul id="list-learning-roadmap" style="padding-left: 1.2rem; line-height: 1.9; font-size: 1.05rem;">
+        <li>Loading personalized learning roadmap...</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI-Powered Intelligent Interview Coaching & Assessment System &copy; 2026</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const btnLogout = document.getElementById('btn-logout');
+      if (btnLogout) { btnLogout.addEventListener('click', () => { API.clearAuth(); window.location.href = 'login.html'; }); }
+
+      try {
+        const gap = await API.getSkillGap();
+        document.getElementById('gap-target-role').innerText = gap.target_role;
+
+        // Render Strong Skills
+        const strongBox = document.getElementById('container-strong-skills');
+        if (gap.strong_skills && gap.strong_skills.length > 0) {
+          strongBox.innerHTML = gap.strong_skills.map(s => `<span class="badge badge-success" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">${s}</span>`).join('');
+        } else {
+          strongBox.innerHTML = `<span class="badge badge-success">Java</span>`;
+        }
+
+        // Render Skills to Improve
+        const improveBox = document.getElementById('container-improve-skills');
+        if (gap.skills_to_improve && gap.skills_to_improve.length > 0) {
+          improveBox.innerHTML = gap.skills_to_improve.map(s => `<span class="badge badge-warning" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">${s}</span>`).join('');
+        } else {
+          improveBox.innerHTML = `<span class="badge badge-warning">System Design</span>`;
+        }
+
+        // Render Expected Skills
+        const expectedBox = document.getElementById('container-expected-skills');
+        if (gap.expected_skills && gap.expected_skills.length > 0) {
+          expectedBox.innerHTML = gap.expected_skills.map(s => `<span class="badge badge-primary" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">${s}</span>`).join('');
+        } else {
+          expectedBox.innerHTML = `<span class="badge badge-primary">OOP & Architecture</span>`;
+        }
+
+        // Render Roadmap
+        const roadmapList = document.getElementById('list-learning-roadmap');
+        if (gap.recommended_learning_areas && gap.recommended_learning_areas.length > 0) {
+          roadmapList.innerHTML = gap.recommended_learning_areas.map(area => `<li><strong>${area}</strong> - Recommended for candidate upskilling</li>`).join('');
+        } else {
+          roadmapList.innerHTML = `<li><strong>Java Collections & Multithreading</strong></li><li><strong>Spring Boot REST API Development</strong></li>`;
+        }
+
+      } catch (err) {
+        console.error('Failed to load skill gap:', err);
+      }
+    });
+  </script>
+</body>
+</html>

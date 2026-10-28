@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live AI Mock Interview</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .interviewer-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+    .question-box {
+      background: #f1f5f9;
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    .eval-modal {
+      display: none;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="dashboard.html" class="brand">AI Interview Coach</a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><button id="btn-logout" class="btn-nav-logout">Exit Session</button></li>
+    </ul>
+  </nav>
+
+  <div class="container" style="max-width: 800px;">
+    <!-- Session Status Header -->
+    <div class="card" style="margin-top: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div class="interviewer-avatar">AI</div>
+          <div>
+            <h3 style="margin-bottom: 0.1rem;">AI Interviewer</h3>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
+              Role: <strong id="session-role">Java Developer</strong> | 
+              Type: <span id="session-type">Technical</span> | 
+              Difficulty: <span id="session-difficulty" class="badge badge-primary">Medium</span>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700; font-size: 0.95rem; color: var(--primary);" id="question-tracker">Question 1 of 5</div>
+          <span id="follow-up-badge" class="badge badge-warning" style="display: none;">Follow-up Question</span>
+        </div>
+      </div>
+
+      <!-- Visual Progress Bar -->
+      <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">
+        <span>Interview Progress</span>
+        <span id="progress-text">20%</span>
+      </div>
+      <div class="progress-container"><div id="progress-bar" class="progress-bar" style="width: 20%;"></div></div>
+    </div>
+
+    <!-- Question Box & Answering Workplace -->
+    <div class="card">
+      <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+        <span id="badge-category" class="badge badge-primary">Technical</span>
+        <span id="badge-skill" class="badge badge-success">Java Collections</span>
+      </div>
+
+      <div class="question-box" id="question-text">
+        Loading dynamic AI interview question...
+      </div>
+
+      <form id="answer-form">
+        <div class="form-group">
+          <label for="answer-input" style="display: flex; justify-content: space-between;">
+            <span>Your Response</span>
+            <span style="font-weight: normal; color: var(--text-muted); font-size: 0.85rem;">Be specific and provide code examples where applicable</span>
+          </label>
+          <textarea id="answer-input" class="form-control" placeholder="Type your response here..." required></textarea>
+        </div>
+
+        <button type="submit" id="btn-submit-answer" class="btn btn-primary btn-block" style="font-size: 1rem; padding: 0.8rem;">
+          Submit Answer & Next &rarr;
+        </button>
+      </form>
+
+      <!-- Real-time AI Evaluation Alert Modal -->
+      <div id="eval-modal" class="eval-modal">
+        <h4 style="color: #1e40af; margin-bottom: 0.5rem;">🤖 AI Real-Time Answer Evaluation</h4>
+        <div style="display: flex; gap: 1rem; font-weight: bold; margin-bottom: 0.5rem;">
+          <span>Overall: <strong id="eval-overall-score" style="color: var(--primary);">8.5/10</strong></span>
+          <span>Correctness: <strong id="eval-corr-score">9.0/10</strong></span>
+        </div>
+        <p id="eval-feedback" style="font-size: 0.9rem; color: var(--text-dark); margin-bottom: 0.5rem;"></p>
+        <div id="eval-strengths" style="font-size: 0.85rem; color: var(--success); font-weight: 500;"></div>
+        <button type="button" id="btn-next-question" class="btn btn-primary" style="margin-top: 0.75rem;">Next Question &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI-Powered Intelligent Interview Coaching & Assessment System &copy; 2026</p>
+  </footer>
+
+  <script src="js/api.js?v=20261022"></script>
+  <script src="js/interview.js?v=20261022"></script>
+</body>
+</html>

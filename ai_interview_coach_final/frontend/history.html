@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview History - AI Interview Coach</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="dashboard.html" class="brand">AI Interview Coach</a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="interview_setup.html">New Interview</a></li>
+      <li><a href="history.html" class="active">History</a></li>
+      <li><a href="skill_gap.html">Skill Gap</a></li>
+      <li><button id="btn-logout" class="btn-nav-logout">Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h1>Past Mock Interview History</h1>
+        <p>Review your historical interview sessions, score progression, and detailed candidate assessment reports.</p>
+      </div>
+      <div>
+        <a href="interview_setup.html" class="btn btn-primary">+ New Interview</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date & Time</th>
+              <th>Target Role</th>
+              <th>Interview Type</th>
+              <th>Difficulty</th>
+              <th>Questions</th>
+              <th>Overall Score</th>
+              <th>Status</th>
+              <th>Report Action</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Loading interview history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI-Powered Intelligent Interview Coaching & Assessment System &copy; 2026</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const btnLogout = document.getElementById('btn-logout');
+      if (btnLogout) { btnLogout.addEventListener('click', () => { API.clearAuth(); window.location.href = 'login.html'; }); }
+
+      try {
+        const interviews = await API.listInterviews();
+        const tbody = document.getElementById('history-tbody');
+        if (interviews && interviews.length > 0) {
+          tbody.innerHTML = interviews.map(i => {
+            const dateStr = new Date(i.created_at).toLocaleString();
+            const scoreStr = i.overall_score != null ? `<strong>${i.overall_score}%</strong>` : 'N/A';
+            const badgeClass = i.status === 'completed' ? 'badge-success' : 'badge-warning';
+            return `
+              <tr>
+                <td>#${i.id}</td>
+                <td>${dateStr}</td>
+                <td><strong>${i.target_role}</strong></td>
+                <td>${i.interview_type}</td>
+                <td><span class="badge badge-primary">${i.difficulty}</span></td>
+                <td>${i.total_questions}</td>
+                <td>${scoreStr}</td>
+                <td><span class="badge ${badgeClass}">${i.status}</span></td>
+                <td>
+                  ${i.status === 'completed'
+                    ? `<a href="report.html?id=${i.id}" class="btn btn-outline" style="padding: 0.3rem 0.75rem; font-size: 0.85rem;">📄 Open Report</a>`
+                    : `<a href="live_interview.html?id=${i.id}" class="btn btn-primary" style="padding: 0.3rem 0.75rem; font-size: 0.85rem;">Resume</a>`}
+                </td>
+              </tr>
+            `;
+          }).join('');
+        } else {
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted);">No mock interviews conducted yet. Click "+ New Interview" above.</td></tr>`;
+        }
+      } catch (err) {
+        console.error('Failed to list history:', err);
+      }
+    });
+  </script>
+</body>
+</html>

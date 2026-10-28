@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Result - AI Interview Coach</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="dashboard.html" class="brand">AI Interview Coach</a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><button id="btn-logout" class="btn-nav-logout">Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="container" style="max-width: 900px;">
+    <div class="page-header" style="text-align: center; display: block; margin-bottom: 2rem;">
+      <span class="badge badge-success" style="font-size: 0.9rem;">Interview Completed</span>
+      <h1 style="font-size: 2.25rem; margin-top: 0.5rem;">AI Performance Assessment Summary</h1>
+      <p id="result-meta">Java Developer | Technical Interview | Medium Difficulty</p>
+    </div>
+
+    <!-- Score Highlights -->
+    <div class="card" style="text-align: center; padding: 2.5rem; background: linear-gradient(135deg, #1e293b, #0f172a); color: white;">
+      <div style="text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; color: #94a3b8; font-weight: 700;">Overall Interview Score</div>
+      <div id="overall-score-display" style="font-size: 4rem; font-weight: 900; color: #60a5fa; margin: 0.5rem 0;">0%</div>
+      <p id="overall-evaluation-badge" style="font-size: 1.1rem; color: #cbd5e1;">Calculating evaluation...</p>
+    </div>
+
+    <!-- 5 Dimension Score Breakdown -->
+    <div class="grid-3" style="margin-bottom: 2rem;">
+      <div class="stat-card">
+        <div>
+          <div class="label">Technical Score</div>
+          <div class="value" id="score-tech" style="color: var(--primary);">0%</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="label">Communication</div>
+          <div class="value" id="score-comm" style="color: var(--success);">0%</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="label">Correctness</div>
+          <div class="value" id="score-corr" style="color: var(--warning);">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Feedback Cards -->
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="color: var(--success); margin-bottom: 1rem;">💪 Key Strengths</h3>
+        <ul id="list-strengths" style="padding-left: 1.2rem; line-height: 1.8;">
+          <li>Loading strengths...</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="color: var(--danger); margin-bottom: 1rem;">🎯 Technical Gaps & Improvements</h3>
+        <ul id="list-weaknesses" style="padding-left: 1.2rem; line-height: 1.8;">
+          <li>Loading areas to improve...</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+      <a id="btn-view-report" href="#" class="btn btn-primary" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
+        📄 View Detailed 12-Section Assessment Report
+      </a>
+      <a href="dashboard.html" class="btn btn-outline" style="font-size: 1.05rem; padding: 0.85rem 2rem;">
+        Return to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI-Powered Intelligent Interview Coaching & Assessment System &copy; 2026</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/result.js"></script>
+</body>
+</html>

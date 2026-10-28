@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidate Dashboard - AI Interview Coach</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="dashboard.html" class="brand">AI Interview Coach</a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html" class="active">Dashboard</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="interview_setup.html">New Interview</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="skill_gap.html">Skill Gap</a></li>
+      <li><button id="btn-logout" class="btn-nav-logout">Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h1 id="welcome-heading">Welcome, Candidate</h1>
+        <p id="target-role-sub">Target Role: Software Developer</p>
+      </div>
+      <div>
+        <a href="interview_setup.html" class="btn btn-primary">+ Start Mock Interview</a>
+      </div>
+    </div>
+
+    <!-- Stat Grid -->
+    <div class="grid-3" style="margin-bottom: 2rem;">
+      <div class="stat-card">
+        <div>
+          <div class="label">Interviews Completed</div>
+          <div class="value" id="stat-completed">0</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="label">Average Score</div>
+          <div class="value" id="stat-avg">0%</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <div class="label">Best Score</div>
+          <div class="value" id="stat-best">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Performance Dimension Breakdown -->
+      <div class="card">
+        <h3 style="margin-bottom: 1rem;">Performance Dimensions</h3>
+        
+        <div style="margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; font-weight: 600;">
+            <span>Technical Knowledge</span>
+            <span id="score-tech">0%</span>
+          </div>
+          <div class="progress-container"><div id="bar-tech" class="progress-bar" style="width: 0%;"></div></div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; font-weight: 600;">
+            <span>Communication & Clarity</span>
+            <span id="score-comm">0%</span>
+          </div>
+          <div class="progress-container"><div id="bar-comm" class="progress-bar" style="width: 0%; background: var(--success);"></div></div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; font-weight: 600;">
+            <span>Problem Solving & Relevance</span>
+            <span id="score-prob">0%</span>
+          </div>
+          <div class="progress-container"><div id="bar-prob" class="progress-bar" style="width: 0%; background: var(--warning);"></div></div>
+        </div>
+
+        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+          <div style="margin-bottom: 0.5rem;"><strong>Strongest Skill:</strong> <span id="badge-strong" class="badge badge-success">Java</span></div>
+          <div><strong>Area to Improve:</strong> <span id="badge-improve" class="badge badge-danger">Multithreading</span></div>
+        </div>
+      </div>
+
+      <!-- Performance Canvas Chart -->
+      <div class="card">
+        <h3 style="margin-bottom: 1rem;">Performance Analytics Chart</h3>
+        <canvas id="perf-chart" width="400" height="220" style="width: 100%; height: 220px;"></canvas>
+      </div>
+    </div>
+
+    <!-- Recent Interviews -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3>Recent Mock Interviews</h3>
+        <a href="history.html" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem;">View All History &rarr;</a>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Target Role</th>
+              <th>Type</th>
+              <th>Difficulty</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="recent-table-body">
+            <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No interviews conducted yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>AI-Powered Intelligent Interview Coaching & Assessment System &copy; 2026</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
